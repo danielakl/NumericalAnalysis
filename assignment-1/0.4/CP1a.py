@@ -18,5 +18,5 @@ for i in range(1, 15, 1):
     res1 = func(r)
     res2 = sup(r)
     diff = res1 - res2
-    print("x:", r, "1:", res1, ", 2:", res2, ", diff:", diff)
-
+    print(r, "\t", res1, "\t", res2, "\t", diff)
+    # print("x:", r, "1:", res1, ", 2:", res2, ", diff:", diff)
