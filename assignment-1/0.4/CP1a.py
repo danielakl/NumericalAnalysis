@@ -1,5 +1,4 @@
-from numpy.ma import tan, floor
-from numpy.random import random
+from numpy.ma import tan
 from sympy import sec
 
 
@@ -13,10 +12,10 @@ def sup(x):
     return -1 / (sec(x) + 1)
 
 
+print("X", "\t", "Difference")
 for i in range(1, 15, 1):
     r = 10 ** -i
     res1 = func(r)
     res2 = sup(r)
     diff = res1 - res2
-    print(r, "\t", res1, "\t", res2, "\t", diff)
-    # print("x:", r, "1:", res1, ", 2:", res2, ", diff:", diff)
+    print(r, "\t", diff)

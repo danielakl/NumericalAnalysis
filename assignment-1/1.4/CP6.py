@@ -15,4 +15,4 @@ n2 = 0
 while n1 != n2:
     n2 = n1
     n1 = func(n1)
-print("n:", n1)
+print("Radius:", n1)
