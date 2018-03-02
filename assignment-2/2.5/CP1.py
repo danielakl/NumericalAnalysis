@@ -1,43 +1,43 @@
 import numpy as np
+import scipy as sp
+from scipy.sparse import spdiags
 
 
-def next(S, i):
-    if i == 0:
-        return (S[i+1]+2)/3
-    if i == len(S)-1:
-        return (S[i-1]+2)/3
-    return (S[i+1]+S[i-1]+1)/3
-
-
-def main(n):
-    # A = np.array([[0.0] * n for _ in range(n)])
-    # for i in range(0, n):
-    #     A[i, i] = 3
-    # for i in range(1, n):
-    #     A[i-1, i] = -1
-    #     A[i, i-1] = -1
-    S = [1.0]*n
-    S[0] = 2.0
-    S[len(S)-1] = 2.0
+def jacobi(n):
+    A, B = make_matrix(n)
+    D = A.diagonal()
+    e = sp.ones(n)
+    R = spdiags([-e, -e], [-1, 1], n, n)
     c = 0
-    solved = False
-    while not solved:
+    x = np.zeros(n)
+    x0 = np.zeros(n)
+
+    while True:
         c += 1
-        sc = 0  # solve count
-        for i in range(0, n):
-            t = next(S, i)
-            if abs(S[i]-1) < 0.0000005:
-                sc += 1
-            S[i] = t
-        if sc == n:
-            solved = True
-    m = 0
-    for i in range(0, n):
-        t = abs(S[i]-1)
-        if t > m:
-            m = t
-    return c, m
+        x = (B - (R * x)) / D
+        correct = 0
+        for j in range(len(x)):
+            if abs(x[j]-1) < 0.0000005:
+                correct += 1
+        if correct == n:
+            dif = np.zeros(n)
+            for k in range(n):
+                dif[k] = abs(x0[k] - x[k])
+            be = 1 - min(dif)
+            return c, be
 
 
-print('100:', main(100))
-print('100000:', main(100000))
+def make_matrix(n):
+    e = sp.ones(n)
+    A = spdiags([-e, 3*e, -e], [-1, 0, 1], n, n)
+
+    B = np.zeros(n)
+    B[0] = 2
+    B[n-1] = 2
+    B[1: n-1] = 1
+    return A, B
+
+
+# print('10:', jacobi(10))
+print('100:', jacobi(100))
+print('100000:', jacobi(100000))
