@@ -1,5 +1,5 @@
 import numpy as np
-from CP1 import gausselimLU
+from GaussLU import gausselimLU
 
 
 def backSub(Ain):
@@ -53,3 +53,6 @@ def main():
     b3 = solve(b1, b2)
     print("CP2b)")
     print(b3)
+
+
+main()
